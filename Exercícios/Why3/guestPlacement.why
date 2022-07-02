@@ -1,0 +1,46 @@
+theory GuestPlacement
+
+    type person = Anne | Susan | Peter
+
+    type chair = Left | Middle | Right
+
+    predicate sits person chair
+
+    (* alternativa:
+    function sits person : chair
+    *)
+
+
+    axiom everybody_sits:
+        forall p:person. sits p Left \/ sits p Middle \/ sits p Right
+        
+    axiom only_one_per_chair:
+        forall p1 p2:person, c:chair. (sits p1 c /\ sits p2 c) -> p1 = p2
+
+    axiom anne_peter : 
+        (sits Anne Middle -> not (sits Peter Left) /\ not (sits Peter Right)) /\
+        (sits Anne Right -> sits Peter Left) /\
+        (sits Anne Left -> sits Peter Right)
+
+    axiom anne_left : 
+        not (sits Anne Left)
+        
+    axiom susan_peter :
+        sits Peter Left -> not (sits Susan Middle) /\
+        sits Peter Middle -> not (sits Susan Right)
+
+
+
+    goal PlacementNotPossible: false
+
+    (*
+    goal RightAnne: sits Anne Right
+    goal RightSusan: sits Susan Right
+    goal RightPeter: sits Peter Right
+    *)
+
+    goal sitAll: 
+        forall c1 c2 c3:chair. 
+        not(sits Peter c1 /\ sits Susan c2 /\ sits Anne c3)
+
+end

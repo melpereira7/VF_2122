@@ -1,0 +1,60 @@
+theory ScottishClub
+
+    predicate scottish
+    predicate red_socks
+    predicate wears_kilt
+    predicate married
+    predicate sunday
+
+
+    axiom r1: not scottish -> red_socks
+
+    axiom r2: wears_kilt \/ not red_socks
+
+    axiom r3: married -> not sunday
+
+    axiom r4: sunday <-> scottish
+
+    axiom r5: wears_kilt -> scottish /\ married
+
+    (* axiom r6: scottish -> wears_kilt *)
+
+
+    goal no_members: false 
+
+
+end
+
+
+
+theory ScottishClubFOL
+
+    type person = Alan
+
+    predicate scottish person
+    predicate red_socks person
+    predicate wears_kilt person
+    predicate married person
+    predicate sunday person
+
+    predicate member person
+    
+
+    axiom r1: forall p:person. member p /\ not scottish p -> red_socks p
+
+    axiom r2: forall p:person. member p -> wears_kilt p /\ not red_socks p
+
+    axiom r3: forall p:person. member p /\ married p -> not sunday p
+
+    axiom r4: forall p:person. member p -> sunday p <-> scottish p
+
+    axiom r5: forall p:person. member p /\ wears_kilt p -> scottish p /\ married p
+
+    (* axiom r6: forall p:person. member p /\ scottish p -> wears_kilt p *)
+
+
+    goal no_members: forall p:person. not (member p)
+
+    goal alan_is_member: member Alan
+
+end

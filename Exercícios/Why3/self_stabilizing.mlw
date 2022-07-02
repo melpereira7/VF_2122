@@ -1,0 +1,19 @@
+module Base
+    use export int.int
+    use export int.EuclideanDivision
+    use export map.Map
+
+
+    type node = int
+    val constant n_nodes : int
+    axiom n_nodes_bounds = 2 < n_nodes
+
+    let predicate validNd (n:node)  = 0 <= n < n_nodes
+
+    type state = int
+    val constant k_states : int
+    axiom k_states_lower_bound : n_nodes < k_states
+
+    type world = map node state
+
+    predicate has_token(lS: map node state)
